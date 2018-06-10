@@ -43,16 +43,16 @@
 /dts-v1/;
 
 #include <dt-bindings/input/input.h>
-//#include "x3399-baseboard.dtsi"
+#include "x3399-baseboard.dtsi"
 #include "rk3399.dtsi"
-//#include "rk3399-vop-clk-set.dtsi"
+#include "rk3399-vop-clk-set.dtsi"
 
 / {
 	model = "9tripod RK3399 Development Board";
 	compatible = "rockchip,android", "9tripod,x3399-development-board", "rockchip,rk3399";
 
 	chosen {
-		bootargs = "dom0_mem=512M dom0_max_vcpus=2 bootscrub=0 flask_enforcing=1 gnttab_max_frames=64";
+		bootargs = "dom0_mem=512M console=dtuart dtuart=uart0 dom0_max_vcpus=2 bootscrub=0 flask_enforcing=1 gnttab_max_frames=64";
 		xen,dom0-bootargs = "console=hvc0 /dev/mmcblk0p2 rw rootwait rootfstype=ext2 ignore_loglevel";
 		modules {
 			#address-cells = <2>;
@@ -68,5 +68,87 @@
 };
 
 &uart0 {
+	status = "disabled";
+};
+&uart1 {
+	status = "disabled";
+};
+
+&i2s2 {
+	status = "okay";
+};
+
+&i2c1 {
+	status = "okay";
+};
+
+&pwm3 {
+	status = "okay";
+	interrupts = <GIC_SPI 61 IRQ_TYPE_LEVEL_HIGH 0>;
+	compatible = "rockchip,remotectl-pwm";
+	remote_pwm_id = <3>;
+	handle_cpu_id = <0>;
+
+	ir_key0 {
+		rockchip,usercode = <0xff40>;
+		rockchip,key_table =
+			<0xb2	KEY_POWER>,
+			<0xe5	KEY_HOME>,
+			<0xbd	KEY_BACK>,
+			<0xba	KEY_MENU>,
+			<0xf4	KEY_UP>,
+			<0xf1	KEY_DOWN>,
+			<0xef	KEY_LEFT>,
+			<0xee	KEY_RIGHT>,
+			<0xf2	KEY_ENTER>,
+			<0xf0	KEY_REPLY>,
+			<0xea	KEY_VOLUMEUP>,
+			<0xe3	KEY_VOLUMEDOWN>,
+			<0xbc	KEY_MUTE>,
+			<0xfe	KEY_1>,
+			<0xfd	KEY_2>,
+			<0xfc	KEY_3>,
+			<0xfb	KEY_4>,
+			<0xfa	KEY_5>,
+			<0xf9	KEY_6>,
+			<0xf8	KEY_7>,
+			<0xf7	KEY_8>,
+			<0xb6	KEY_9>,
+			<0xff	KEY_0>,
+			<0xed	KEY_BACKSPACE>,
+
+			<0xaf	KEY_POWER>,
+			<0x8b	KEY_VOLUMEUP>,
+			<0xb9	KEY_VOLUMEDOWN>;
+	};
+};
+
+&vopb {
+	status = "okay";
+	assigned-clocks = <&cru DCLK_VOP0_DIV>;
+	assigned-clock-parents = <&cru PLL_CPLL>;
+};
+
+&vopl {
+	status = "okay";
+	assigned-clocks = <&cru DCLK_VOP1_DIV>;
+	assigned-clock-parents = <&cru PLL_VPLL>;
+};
+
+
+&vopb_mmu {
+	status = "okay";
+};
+
+
+&vopl_mmu {
+	status = "okay";
+};
+
+&i2s2 {
+	#sound-dai-cells = <0>;
+};
+
+&vpu {
 	status = "okay";
 };
