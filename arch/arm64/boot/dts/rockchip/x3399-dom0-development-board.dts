@@ -44,7 +44,7 @@
 
 #include <dt-bindings/input/input.h>
 #include "x3399-baseboard.dtsi"
-#include "rk3399.dtsi"
+#include "rk3399-android.dtsi"
 #include "rk3399-vop-clk-set.dtsi"
 
 / {
@@ -53,7 +53,7 @@
 
 	chosen {
 		bootargs = "dom0_mem=512M console=dtuart dtuart=serial0 dom0_max_vcpus=2 bootscrub=0 flask_enforcing=1 gnttab_max_frames=64";
-		xen,dom0-bootargs = "console=hvc0 /dev/mmcblk0p2 rw rootwait rootfstype=ext2 ignore_loglevel";
+		xen,dom0-bootargs = "console=hvc0 root=/dev/mmcblk0p2 rw rootwait rootfstype=ext2 ignore_loglevel";
 		modules {
 			#address-cells = <2>;
 			#size-cells = <2>;
