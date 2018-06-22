@@ -52,7 +52,7 @@
 	compatible = "rockchip,android", "9tripod,x3399-development-board", "rockchip,rk3399";
 
 	chosen {
-		bootargs = "dom0_mem=512M console=dtuart dtuart=uart0 dom0_max_vcpus=2 bootscrub=0 flask_enforcing=1 gnttab_max_frames=64";
+		bootargs = "dom0_mem=512M console=dtuart dtuart=serial0 dom0_max_vcpus=2 bootscrub=0 flask_enforcing=1 gnttab_max_frames=64";
 		xen,dom0-bootargs = "console=hvc0 /dev/mmcblk0p2 rw rootwait rootfstype=ext2 ignore_loglevel";
 		modules {
 			#address-cells = <2>;
@@ -65,13 +65,22 @@
                 };
 	};
 
+	aliases {
+		serial0 = &uart2;
+	};
+
 };
 
 &uart0 {
 	status = "disabled";
 };
+
 &uart1 {
 	status = "disabled";
+};
+
+&uart2 {
+	status = "okay";
 };
 
 &i2s2 {
